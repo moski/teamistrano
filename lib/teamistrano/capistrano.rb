@@ -88,7 +88,18 @@ module Teamistrano
       puts params.inspect
       
       uri = URI(@messaging.webhook)
-      Net::HTTP.post_form(uri, params)
+      
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request['Content-Type'] = 'application/json'
+      request.body =  params
+      
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      http.start { |h| h.request(request) }
+      
+      # Net::HTTP.post_form(uri, params)
     end
 
     def dry_run?
