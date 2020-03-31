@@ -3,7 +3,7 @@ module Teamistrano
     module Helpers
 
       def icon_url
-        options.fetch(:icon_url, '#')
+        options.fetch(:icon_url, 'https://raw.githubusercontent.com/moski/teamistrano/master/images/logo.png')
       end
 
       def icon_emoji
