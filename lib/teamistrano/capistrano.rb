@@ -78,9 +78,6 @@ module Teamistrano
 
     def post_to_teams_as_webhook(payload = {})
       params =  payload.to_json
-      
-      puts params.inspect
-      
       uri = URI(@messaging.webhook)
       
       request = Net::HTTP::Post.new(uri.request_uri)
