@@ -37,12 +37,6 @@ module Teamistrano
       payload = @messaging.payload_for(action)
       return if payload.nil?
 
-      # payload = {
-      #   username: @messaging.username,
-      #   icon_url: @messaging.icon_url,
-      #   icon_emoji: @messaging.icon_emoji,
-      # }.merge(payload)
-
       channels = Array(@messaging.channels_for(action))
       if channels.empty?
         channels = [nil] # default webhook channel
@@ -62,20 +56,20 @@ module Teamistrano
         return
       end
 
-      #begin
+      begin
         response = post_to_teams(payload)
-      # rescue => e
-      #   backend.warn("[teamistrano] Error notifying MS Teams!")
-      #   backend.warn("[teamistrano]   Error: #{e.inspect}")
-      # end
+      rescue => e
+        backend.warn("[teamistrano] Error notifying MS Teams!")
+        backend.warn("[teamistrano]   Error: #{e.inspect}")
+      end
 
-      # if response && response.code !~ /^2/
-      #   warn("[teamistrano] MS Teams API Failure!")
-      #   warn("[teamistrano]   URI: #{response.uri}")
-      #   warn("[teamistrano]   Code: #{response.code}")
-      #   warn("[teamistrano]   Message: #{response.message}")
-      #   warn("[teamistrano]   Body: #{response.body}") if response.message != response.body && response.body !~ /<html/
-      # end
+      if response && response.code !~ /^2/
+        warn("[teamistrano] MS Teams API Failure!")
+        warn("[teamistrano]   URI: #{response.uri}")
+        warn("[teamistrano]   Code: #{response.code}")
+        warn("[teamistrano]   Message: #{response.message}")
+        warn("[teamistrano]   Body: #{response.body}") if response.message != response.body && response.body !~ /<html/
+      end
     end
 
     def post_to_teams(payload = {})
