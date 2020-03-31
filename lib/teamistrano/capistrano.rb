@@ -37,11 +37,11 @@ module Teamistrano
       payload = @messaging.payload_for(action)
       return if payload.nil?
 
-      payload = {
-        username: @messaging.username,
-        icon_url: @messaging.icon_url,
-        icon_emoji: @messaging.icon_emoji,
-      }.merge(payload)
+      # payload = {
+      #   username: @messaging.username,
+      #   icon_url: @messaging.icon_url,
+      #   icon_emoji: @messaging.icon_emoji,
+      # }.merge(payload)
 
       channels = Array(@messaging.channels_for(action))
       if channels.empty?
@@ -83,7 +83,7 @@ module Teamistrano
     end
 
     def post_to_teams_as_webhook(payload = {})
-      params = {'payload' => payload.to_json}
+      params =  payload.to_json
       uri = URI(@messaging.webhook)
       Net::HTTP.post_form(uri, params)
     end
