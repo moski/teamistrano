@@ -62,20 +62,20 @@ module Teamistrano
         return
       end
 
-      begin
+      #begin
         response = post_to_teams(payload)
-      rescue => e
-        backend.warn("[teamistrano] Error notifying MS Teams!")
-        backend.warn("[teamistrano]   Error: #{e.inspect}")
-      end
+      # rescue => e
+      #   backend.warn("[teamistrano] Error notifying MS Teams!")
+      #   backend.warn("[teamistrano]   Error: #{e.inspect}")
+      # end
 
-      if response && response.code !~ /^2/
-        warn("[teamistrano] MS Teams API Failure!")
-        warn("[teamistrano]   URI: #{response.uri}")
-        warn("[teamistrano]   Code: #{response.code}")
-        warn("[teamistrano]   Message: #{response.message}")
-        warn("[teamistrano]   Body: #{response.body}") if response.message != response.body && response.body !~ /<html/
-      end
+      # if response && response.code !~ /^2/
+      #   warn("[teamistrano] MS Teams API Failure!")
+      #   warn("[teamistrano]   URI: #{response.uri}")
+      #   warn("[teamistrano]   Code: #{response.code}")
+      #   warn("[teamistrano]   Message: #{response.message}")
+      #   warn("[teamistrano]   Body: #{response.body}") if response.message != response.body && response.body !~ /<html/
+      # end
     end
 
     def post_to_teams(payload = {})
